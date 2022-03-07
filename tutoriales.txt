@@ -1,0 +1,3 @@
+heroku config:set nombreVar="Claudio"
+
+heroku config
