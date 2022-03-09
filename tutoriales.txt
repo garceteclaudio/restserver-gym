@@ -8,3 +8,6 @@ heroku config:unset nombreVar
 
 
 heroku config:set MONGODB_CNN="mongodb+srv://cgarcete:Z98xFKyAccKJbadZ@miclustercafe.m0xlh.mongodb.net/test"
+
+// borrar un archivo del repositorio de git
+git rm .env --cached
