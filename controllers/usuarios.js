@@ -73,18 +73,25 @@ const usuariosPost =  async (req, res = response) => {
   })
 }
 
+// req por donde envio los datos
+// resp las respuesta
 const usuariosDelete = async (req, res = response) => {
 
   const {id} = req.params;
+
+  const uid = req.uid;
 
   // ya se hizo la validacion de q existe en carpeta routes
   //Fisicamente lo borramos
   // const usuario = await Usuario.findByIdAndDelete(id);
   const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
+  const usuarioAutenticado = req.usuario;
 
   res.json({
       msg: "Delete",
-      usuario
+      usuario,
+      usuarioAutenticado,
+      uid
   })
 }
 

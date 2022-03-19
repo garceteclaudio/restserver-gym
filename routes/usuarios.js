@@ -1,10 +1,26 @@
-const {Router} = require("express");
-const {usuariosGet, usuariosPost, usuariosDelete, usuariosPut, usuariosGetQueryParams} = require("../controllers/usuarios");
+const { Router } = require("express");
 const { check } = require("express-validator");
 
+// const { validarCampos } = require("../middleware/validar-campos");
+// const { validarJWT } = require("../middleware/validar-jwt");
+// const { esAdminRole, tieneRole } = require("../middleware/validar-roles");
 
-const {validarCampos} = require("../middleware/validar-campos");
+const {
+    validarCampos,
+    validarJWT,
+    esAdminRole,
+    tieneRole
+ } = require("../middleware");
+
 const { esRoleValido, emailExiste, existeUsuarioPorID } = require("../helpers/db-validators");
+
+const {usuariosGet, 
+    usuariosPost, 
+    usuariosDelete,
+    usuariosPut, 
+    usuariosGetQueryParams
+    } = require("../controllers/usuarios");
+
 
 const router = Router();
 
@@ -20,10 +36,10 @@ router.put('/:id', [
 ], usuariosPut);
 
 router.post('/', [
-    // check("correo", "El correo no es valido").isEmail(),
+    check("correo", "El correo no es valido").isEmail(),
     check("nombre", "El nombre es obligatorio").not().isEmail(),
     check("password", "La password debe tener mas de 6 caracteres").isLength({min:6}),
-    check("rol", "No es un rol valido").isIn("ADMIN_ROLE", "USER_ROLE"),
+    check("rol", "No es un rol valido").isIn(["USER_ROLE", "ADMIN_ROLE", "VENTAS_ROLE"]),
     // validar contra DB
     check("rol").custom( esRoleValido ),
     check("correo").custom( emailExiste ),
@@ -31,7 +47,10 @@ router.post('/', [
 ],  usuariosPost);
 
 //Se recibe el ID como segmento del URL
-router.delete('/:id', [
+router.delete('/:id', [  
+    validarJWT,
+    // esAdminRole,
+    tieneRole("ADMIN_ROLE"),
     check("id", "No es un ID valido").isMongoId(),
     check("id").custom( existeUsuarioPorID ),
     validarCampos,
