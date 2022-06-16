@@ -28,27 +28,10 @@ const usuariosGet =  async(req = request, res = response) => {
   })
 }
 
-const usuariosGetQueryParams =  (req = request, res = response) => {
-
-  // const query = req.query;
-
-  // Desestructuracion
-  // http://localhost:8080/api/usuarios?q=hola&apellido=Garcetex  
-  const {q, apellido} = req.query;
-
-
-  res.status(201).json({
-      name: "Claudio",
-      student: true,
-      q,
-      apellido
-  })
-
-}
-
 const usuariosPost =  async (req, res = response) => {
 
   const {nombre, correo, password, rol} = req.body;
+  
   const usuario = new Usuario({nombre, correo, password, rol});
 
   // Verificar si el correo existe cambio a constant emailExiste
@@ -119,7 +102,6 @@ const usuariosPut =  async (req, res = response) => {
 
 module.exports = {
     usuariosGet,
-    usuariosGetQueryParams,
     usuariosPost,
     usuariosDelete,
     usuariosPut

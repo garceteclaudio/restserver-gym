@@ -1,13 +1,23 @@
-heroku config:set nombreVar="Claudio"
-
+//ver variables en heroku
 heroku config
 
+//Crear variables en heroku
+heroku config:set name="claudios"
+heroku config:set MONGODB_CNN="mongodb+srv://cgarcete:Z98xFKyAccKJbadZ@miclustercafe.m0xlh.mongodb.net/test"
 
 //borrar variabl en heroku
 heroku config:unset nombreVar
 
+//logs
+heroku logs -n 10
+//mantener logs en vivo
+heroku logs -n 10 --tail 
 
-heroku config:set MONGODB_CNN="mongodb+srv://cgarcete:Z98xFKyAccKJbadZ@miclustercafe.m0xlh.mongodb.net/test"
 
 // borrar un archivo del repositorio de git
 git rm .env --cached
+
+//Crear en BD CLIENTES, document: roles
+{
+  "rol": "ADMIN_ROLE"
+}

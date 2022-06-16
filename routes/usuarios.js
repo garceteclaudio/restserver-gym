@@ -1,10 +1,12 @@
 const { Router } = require("express");
+
+//Gran conjunto de validaciones para utilizar antes de disparar la ruta del controlador
+//Si falla algo del mdw entonces no se ejecuta la ruta
 const { check } = require("express-validator");
 
 // const { validarCampos } = require("../middleware/validar-campos");
 // const { validarJWT } = require("../middleware/validar-jwt");
 // const { esAdminRole, tieneRole } = require("../middleware/validar-roles");
-
 const {
     validarCampos,
     validarJWT,
@@ -17,16 +19,13 @@ const { esRoleValido, emailExiste, existeUsuarioPorID } = require("../helpers/db
 const {usuariosGet, 
     usuariosPost, 
     usuariosDelete,
-    usuariosPut, 
-    usuariosGetQueryParams
+    usuariosPut,
     } = require("../controllers/usuarios");
 
 
 const router = Router();
 
 router.get('/', usuariosGet);
-
-router.get('/get/', usuariosGetQueryParams);
 
 router.put('/:id', [
     check("id", "No es un ID valido").isMongoId(),
@@ -46,10 +45,10 @@ router.post('/', [
     validarCampos,
 ],  usuariosPost);
 
-//Se recibe el ID como segmento del URL
+//Se recibe el ID (Mongo) como segmento del URL
 router.delete('/:id', [  
     validarJWT,
-    // esAdminRole,
+    esAdminRole,
     tieneRole("ADMIN_ROLE"),
     check("id", "No es un ID valido").isMongoId(),
     check("id").custom( existeUsuarioPorID ),
