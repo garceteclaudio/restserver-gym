@@ -21,3 +21,12 @@ git rm .env --cached
 {
   "rol": "ADMIN_ROLE"
 }
+
+// Conectarse a mongodb server de docker
+docker exec -it jolly_nash mongo
+use Clientes
+db.roles.insertOne({rol:"ADMIN_ROLE"})
+db.roles.insertOne({rol:"USER_ROLE"})
+// db.createCollection("test_collection")
+
+

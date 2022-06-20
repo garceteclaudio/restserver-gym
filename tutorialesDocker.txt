@@ -1,0 +1,43 @@
+Docker commands:
+docker pull mongo
+
+sudo su
+docker images
+//ver contenedores corriendo
+docker ps
+//listar todos los contenedores:
+docker ps -a
+
+
+docker start jolly_nash
+docker stop 0a
+docker run -d -p 27017:27017 mongo
+
+
+
+docker-compose up
+
+
+Eliminar contenedor:
+docker rm idContenedor
+
+Eliminar imagen:
+docker rmi nombreImagen nombreImagen
+
+
+
+docker pull jenkins/jenkins
+
+docker run --add-host="localhost:192.168.1.5" -p 8080:8080 -p 50000:50000 --name jenkins -d -v /Users/cgarcete/Desktop/jenkins/jenkins_home:/var/jenkins_home jenkins/jenkins
+
+        //nombre contenedor
+docker exec -it jenkins bash
+
+//borrar contenedor
+docker rm -f nombreContenedorOID
+//borrar imagen
+docker rmi nombreImagen
+
+docker logs -f nombreContainer
+
+
